@@ -17,6 +17,10 @@ searchBar.keypress((event)=>{
 });
 
 function apiCall(cityName) {
+    todayApiCall(cityName);
+}
+
+function todayApiCall(cityName) {
    
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?appid=" + APIKey+"&q="+cityName;
 
@@ -28,8 +32,23 @@ function apiCall(cityName) {
           citiesHistory.push(response.name);
           localStorage.setItem("citiesHistory", JSON.stringify(citiesHistory));
           renderTodaysForecast(response);
+          uvApiCall(response.coord);
       });
 }
+
+function uvApiCall(coord) {
+   
+    var queryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?cnt=1&appid=" + APIKey+"&lat="+coord.lat+"&lon="+coord.lon;
+
+    $.ajax({
+        url : queryURL,
+        method: "GET"
+      }).then((response)=>{
+          renderUvIndex(response[0]);
+         
+      });
+}
+
 
 function loadSearchHistory(){ 
     
@@ -52,15 +71,20 @@ function renderTodaysForecast(forecast) {
     city.text(forecast.name);
 
     var temp = $("#temp");
-    temp.text(kelvinToFahrenheit(forecast.main.temp));
+    temp.text(`Temperature: ${kelvinToFahrenheit(forecast.main.temp)} °F`);
 
-    var temp = $("#humidity");
-    temp.text(forecast.main.humidity);
-    var temp = $("#wind");
-    temp.text(forecast.wind.speed);
+    var hum = $("#humidity");
+    hum.text(`Humidity: ${forecast.main.humidity}%`);
     
-    var temp = $("#uv-index");
-   // temp.text(forecast.main.humidity);
+    var wind = $("#wind");
+    wind.text(`Wind Speed: ${forecast.wind.speed} MPH`);
+    
+}
+
+function renderUvIndex(uv){
+    console.log(uv);
+    var uvIndex = $("#uv-index");
+    uvIndex.text(`UV Index: ${uv.value}`);
 
 }
 
