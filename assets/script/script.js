@@ -2,7 +2,7 @@ var searchBar = $("#search");
 var citiesUl = $("#cities"); 
 var citiesHistory = localStorage.getItem("citiesHistory") != null
         ? JSON.parse(localStorage.getItem("citiesHistory")) : [];
-
+var APIKey = "507a3776f280a2bc0631714df5f208a7";
 
 searchBar.keypress((event)=>{
    
@@ -17,7 +17,7 @@ searchBar.keypress((event)=>{
 });
 
 function apiCall(cityName) {
-    var APIKey = "507a3776f280a2bc0631714df5f208a7";
+   
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?appid=" + APIKey+"&q="+cityName;
 
     $.ajax({
@@ -27,12 +27,11 @@ function apiCall(cityName) {
           console.log(response);
           citiesHistory.push(response.name);
           localStorage.setItem("citiesHistory", JSON.stringify(citiesHistory));
-        
+          renderTodaysForecast(response);
       });
 }
 
-function loadSearchHistory(){
-    
+function loadSearchHistory(){ 
     
     citiesHistory.forEach(city => {
         var li = $("<li>");
@@ -46,3 +45,25 @@ function loadSearchHistory(){
 $(document).ready(()=>{
     loadSearchHistory();
 });
+
+
+function renderTodaysForecast(forecast) {
+    var city = $("#city-name");
+    city.text(forecast.name);
+
+    var temp = $("#temp");
+    temp.text(kelvinToFahrenheit(forecast.main.temp));
+
+    var temp = $("#humidity");
+    temp.text(forecast.main.humidity);
+    var temp = $("#wind");
+    temp.text(forecast.wind.speed);
+    
+    var temp = $("#uv-index");
+   // temp.text(forecast.main.humidity);
+
+}
+
+function kelvinToFahrenheit(temp){
+   return Math.round(((temp - 273.15) * 9/5 + 32), 2); 
+}
