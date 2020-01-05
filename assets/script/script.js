@@ -1,6 +1,7 @@
 var searchBar = $("#search");
-
-
+var citiesUl = $("#cities"); 
+var citiesHistory = localStorage.getItem("citiesHistory") != null
+        ? JSON.parse(localStorage.getItem("citiesHistory")) : [];
 
 
 searchBar.keypress((event)=>{
@@ -24,12 +25,24 @@ function apiCall(cityName) {
         method: "GET"
       }).then((response)=>{
           console.log(response);
-     
-     console.log(response.name);
-     console.log("Wind Speed: "+ response.wind.speed);
-     console.log("Humidity: "+response.main.humidity);
-     console.log("Temp: "+response.main.temp);
-  
-          
+          citiesHistory.push(response.name);
+          localStorage.setItem("citiesHistory", JSON.stringify(citiesHistory));
+        
       });
 }
+
+function loadSearchHistory(){
+    
+    
+    citiesHistory.forEach(city => {
+        var li = $("<li>");
+        li.text(city);
+        citiesUl.append(li);
+            
+    });
+    
+}
+
+$(document).ready(()=>{
+    loadSearchHistory();
+});
