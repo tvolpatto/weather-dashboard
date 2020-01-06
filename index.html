@@ -18,7 +18,7 @@
         <h1 class="text-white mx-auto">Weather Dashboard</h1>
     </nav>
     <div class="container row ml-5">
-        <div id="search-container" class="col-4">
+        <div id="search-container" class="col-3">
             <form class="form-inline md-form form-sm active-purple-2 mt-2">
                 <label for="search">Search for a city:</label>
                 <input id="search" class="form-control form-control-md w-100" type="text" placeholder="City"
@@ -27,13 +27,17 @@
             </form>
             <ul id="cities" class="list-group mt-4 mb-3"></ul>
         </div>
-        <div id="data-container" class="col-8">
-            <div id="today-forecast" class="col-12">
-                <h2 id="city-name"></h2>
-                <div id="temp"></div>
-                <div id="humidity"></div>
-                <div id="wind"></div>
-                <div id="uv-index"></div>
+        <div id="data-container" class="col-9">
+            <div id="today-forecast" class="mt-2 col-12 border rounded w-100">
+                <h2 id="city-name" class="mt-3"></h2>
+                <br>
+                <div id="temp" class="weather-info"></div>
+                <br>
+                <div id="humidity" class="weather-info"></div>
+                <br>
+                <div id="wind" class="weather-info"></div>
+                <br>
+                <div id="uv-index" class="mb-3 weather-info"></div>
             </div>
             <div id="5-day-forecast" class="col-12">
                 <div class="row">

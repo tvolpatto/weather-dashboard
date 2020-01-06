@@ -79,7 +79,7 @@ $(document).ready(()=>{
 
 function renderTodaysForecast(forecast) {
     var city = $("#city-name");
-    city.text(forecast.name);
+    city.text(`${forecast.name} (${moment().format("MM/DD/YYYY")})`);
 
     var temp = $("#temp");
     temp.text(`Temperature: ${kelvinToFahrenheit(forecast.main.temp)} °F`);
@@ -93,7 +93,9 @@ function renderTodaysForecast(forecast) {
 
 function renderUvIndex(uv){
     var uvIndex = $("#uv-index");
-    uvIndex.text(`UV Index: ${uv.value}`);
+    uvIndex.text(`UV Index: `);
+    var spanValue = $(`<span class='uv-display rounded'>${uv.value}</span>`);
+    uvIndex.append(spanValue);
 }
 
 function render5DayForecast(forecastList) {

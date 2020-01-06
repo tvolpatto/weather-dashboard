@@ -1,9 +1,20 @@
 #search-container {
     background-color:whitesmoke;
     min-height: 400px;
+    margin-right: 0;
 }
 
 label {
     font-size: 22px;
     font-weight: bold;
+}
+
+.uv-display {
+    background-color: red;
+    color: white;
+    padding: 3px;
+}
+
+.weather-info {
+    font-size: 20px;
 }
