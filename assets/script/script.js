@@ -30,6 +30,8 @@ function todayApiCall(cityName) {
           renderTodaysForecast(response);
           uvApiCall(response.coord);
           fiveDaysApiCall(response.id);
+      }).fail((error)=>{
+         displayErrorMsg(error.statusText);
       });
 }
 
@@ -141,3 +143,19 @@ function saveCity(city) {
         loadSearchHistory();
     }
 }
+
+function displayErrorMsg(errMsg) {
+    var spanErr = $("#error-msg");
+    spanErr.empty();
+    spanErr.text(errMsg);
+    spanErr.removeClass("d-none");
+
+    var search = $("#search");
+    search.addClass("border-danger");
+    setTimeout(() => {
+        spanErr.addClass("d-none");
+        search.removeClass("border-danger");
+        search.val("");
+      }, 2000);
+    
+  }
