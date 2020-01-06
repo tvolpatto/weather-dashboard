@@ -3,6 +3,7 @@ var citiesUl = $("#cities");
 var citiesHistory = localStorage.getItem("citiesHistory") != null
         ? JSON.parse(localStorage.getItem("citiesHistory")) : [];
 var APIKey = "507a3776f280a2bc0631714df5f208a7";
+var uri = 'https://api.openweathermap.org/';
 
 searchBar.keypress((event)=>{  
     var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -11,7 +12,6 @@ searchBar.keypress((event)=>{
         var cityName = searchBar.val();
         apiCall(cityName);
     }
-
 });
 
 function apiCall(cityName) {
@@ -19,8 +19,7 @@ function apiCall(cityName) {
 }
 
 function todayApiCall(cityName) {
-   
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?appid=" + APIKey+"&q="+cityName;
+    var queryURL = `${uri}data/2.5/weather?appid=${APIKey}&q=${cityName}`;
 
     $.ajax({
         url : queryURL,
@@ -35,7 +34,7 @@ function todayApiCall(cityName) {
 }
 
 function uvApiCall(coord) {
-    var queryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?cnt=1&appid=" + APIKey+"&lat="+coord.lat+"&lon="+coord.lon;
+    var queryURL = `${uri}data/2.5/uvi/forecast?cnt=1&appid=${APIKey}&lat=${coord.lat}&lon=${coord.lon}`;
 
     $.ajax({
         url : queryURL,
@@ -45,9 +44,8 @@ function uvApiCall(coord) {
       });
 }
 
-function fiveDaysApiCall(cityId) {
-   
-    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?appid=${APIKey}&id=${cityId}`;
+function fiveDaysApiCall(cityId) { 
+    var queryURL = `${uri}data/2.5/forecast?appid=${APIKey}&id=${cityId}`;
 
     $.ajax({
         url : queryURL,
@@ -82,7 +80,7 @@ function renderTodaysForecast(forecast) {
     city.text(`${forecast.name} (${moment().format("MM/DD/YYYY")})`);
 
     var icon = $("<img id='icon' alt='Weather icon'>");
-    icon.attr("src", `http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`);
+    icon.attr("src", `${uri}img/w/${forecast.weather[0].icon}.png`);
     city.append(icon);
 
     var temp = $("#temp");
@@ -116,7 +114,7 @@ function render5DayForecast(forecastList) {
 
             var date = $(`<h5 class='mt-2'>${day}</h5>`);
             
-            var iconUrl = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
+            var iconUrl = `${uri}img/w/${weather.weather[0].icon}.png`;
             var icon = $(`<img id="icon" class='w-50' src=${iconUrl} alt="Weather icon"></img>`)
             
             var temp = $(`<div class="card-temp">Temp: ${kelvinToFahrenheit(weather.main.temp)} °F</div>`);
