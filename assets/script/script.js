@@ -81,6 +81,10 @@ function renderTodaysForecast(forecast) {
     var city = $("#city-name");
     city.text(`${forecast.name} (${moment().format("MM/DD/YYYY")})`);
 
+    var icon = $("<img id='icon' alt='Weather icon'>");
+    icon.attr("src", `http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`);
+    city.append(icon);
+
     var temp = $("#temp");
     temp.text(`Temperature: ${kelvinToFahrenheit(forecast.main.temp)} °F`);
 
@@ -102,15 +106,24 @@ function render5DayForecast(forecastList) {
     var cardsDiv = $("#5-day-cards");
     cardsDiv.empty();
     var day = moment("01/01/1900").format("MM/DD/YYYY");
+    var count = 0;
     forecastList.forEach((weather) =>{
         var newDay = moment(weather.dt_txt).format("MM/DD/YYYY");
-        if(day !== newDay) {
+        if(day !== newDay && count < 5) {
             day = newDay;
-            var card = $("<div class='card col-2'></div>");
-            var date = $(`<h5 class='card-title'>${day}</h5>`);
+            count++;
+            var card = $("<div class='card text-white bg-primary mr-3 pl-1 pr-0 col-2 w-100'></div>");
+
+            var date = $(`<h5 class='mt-2'>${day}</h5>`);
+            
+            var iconUrl = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
+            var icon = $(`<img id="icon" class='w-50' src=${iconUrl} alt="Weather icon"></img>`)
+            
             var temp = $(`<div class="card-temp">Temp: ${kelvinToFahrenheit(weather.main.temp)} °F</div>`);
-            var hum =  $(`<div class="card-hum">Humidity: ${weather.main.humidity}%</div>`);
-            card.append(date, temp, hum);
+            
+            var hum =  $(`<br><div class="mb-2">Humidity: ${weather.main.humidity}%</div>`);
+            
+            card.append(date, icon, temp, hum);
             cardsDiv.append(card);
         }
     });
