@@ -10,21 +10,22 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
     <nav class="navbar navbar-dark bg-dark ">
         <h1 class="text-white mx-auto">Weather Dashboard</h1>
     </nav>
-    <div class="container row">
+    <div class="container row ml-5">
         <div id="search-container" class="col-4">
             <form class="form-inline md-form form-sm active-purple-2 mt-2">
                 <label for="search">Search for a city:</label>
-                <input id="search" class="form-control form-control-sm mr-3 w-75" type="text" placeholder="City"
+                <input id="search" class="form-control form-control-md w-100" type="text" placeholder="City"
                     aria-label="Search">
 
             </form>
-            <ul id="cities"></ul>
+            <ul id="cities" class="list-group mt-4 mb-3"></ul>
         </div>
         <div id="data-container" class="col-8">
             <div id="today-forecast" class="col-12">

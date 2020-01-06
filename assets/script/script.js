@@ -4,23 +4,19 @@ var citiesHistory = localStorage.getItem("citiesHistory") != null
         ? JSON.parse(localStorage.getItem("citiesHistory")) : [];
 var APIKey = "507a3776f280a2bc0631714df5f208a7";
 
-
 searchBar.keypress((event)=>{  
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if(keycode == '13'){
         event.preventDefault();
         var cityName = searchBar.val();
         apiCall(cityName);
-
     }
 
 });
 
 function apiCall(cityName) {
-    todayApiCall(cityName);
-    
+    todayApiCall(cityName); 
 }
-
 
 function todayApiCall(cityName) {
    
@@ -65,11 +61,10 @@ function fiveDaysApiCall(cityId) {
 function loadSearchHistory(){ 
     citiesUl.empty();   
     citiesHistory.forEach(city => {
-        var li = $("<li>");
+        var li = $("<li class='list-group-item'></li>");
         li.text(city);
         li.click(cityClick);
-        citiesUl.append(li);
-            
+        citiesUl.append(li);         
     });  
 }
 
@@ -99,7 +94,6 @@ function renderTodaysForecast(forecast) {
 function renderUvIndex(uv){
     var uvIndex = $("#uv-index");
     uvIndex.text(`UV Index: ${uv.value}`);
-
 }
 
 function render5DayForecast(forecastList) {
@@ -116,10 +110,8 @@ function render5DayForecast(forecastList) {
             var hum =  $(`<div class="card-hum">Humidity: ${weather.main.humidity}%</div>`);
             card.append(date, temp, hum);
             cardsDiv.append(card);
-
         }
     });
-
 }
 
 function kelvinToFahrenheit(temp){
