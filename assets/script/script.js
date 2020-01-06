@@ -18,6 +18,7 @@ searchBar.keypress((event)=>{
 
 function apiCall(cityName) {
     todayApiCall(cityName);
+    
 }
 
 
@@ -62,13 +63,19 @@ function fiveDaysApiCall(cityId) {
 }
 
 function loadSearchHistory(){ 
-    
+    citiesUl.empty();   
     citiesHistory.forEach(city => {
         var li = $("<li>");
         li.text(city);
+        li.click(cityClick);
         citiesUl.append(li);
             
     });  
+}
+
+function cityClick() {
+    var cityName = $(this).text();
+    apiCall(cityName);
 }
 
 $(document).ready(()=>{
@@ -86,8 +93,7 @@ function renderTodaysForecast(forecast) {
     hum.text(`Humidity: ${forecast.main.humidity}%`);
     
     var wind = $("#wind");
-    wind.text(`Wind Speed: ${forecast.wind.speed} MPH`);
-    
+    wind.text(`Wind Speed: ${forecast.wind.speed} MPH`);  
 }
 
 function renderUvIndex(uv){
@@ -98,6 +104,7 @@ function renderUvIndex(uv){
 
 function render5DayForecast(forecastList) {
     var cardsDiv = $("#5-day-cards");
+    cardsDiv.empty();
     var day = moment("01/01/1900").format("MM/DD/YYYY");
     forecastList.forEach((weather) =>{
         var newDay = moment(weather.dt_txt).format("MM/DD/YYYY");
@@ -126,6 +133,6 @@ function saveCity(city) {
         } 
         citiesHistory.push(city);
         localStorage.setItem("citiesHistory", JSON.stringify(citiesHistory));
-
+        loadSearchHistory();
     }
 }
